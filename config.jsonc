@@ -1,0 +1,215 @@
+// -*- mode: jsonc -*-
+// Waybar Configuration
+// Based on Omarchy defaults with customizations
+
+{
+    "reload_style_on_change": true,
+    "layer": "top",
+    "position": "top",
+    "gtk-layer-shell": true,
+    "swap-icon-label": false,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 4,
+    "modules-left": [
+        "clock",
+        "custom/weather",
+        "custom/pomodoro",
+        "custom/wallpaper"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "group/tray-expander",
+        "power-profiles-daemon",
+        "bluetooth",
+        "network",
+        "custom/vpn",
+        "pulseaudio",
+        "custom/cpu",
+        "custom/memory",
+        "custom/gpu",
+        "backlight",
+        "battery"
+    ],
+
+    "hyprland/workspaces": {
+        "swap-icon-label": false
+    },
+
+    "clock": {
+        "format": "{:L%a %d - %I:%M %p}",
+        "tooltip-format": "{:L%d %B %Y}",
+        "tooltip": true
+    },
+
+    "custom/weather": {
+        "interval": 240,
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/pomodoro": {
+        "exec": "~/.config/waybar/scripts/pomodoro-status.sh",
+        "interval": 1,
+        "on-click": "~/.config/waybar/scripts/pomodoro-control.sh start",
+        "on-click-right": "~/.config/waybar/scripts/pomodoro-control.sh reset",
+        "on-click-backward": "~/.config/waybar/scripts/pomodoro-control.sh pause",
+        "on-click-forward": "~/.config/waybar/scripts/pomodoro-control.sh pause",
+        "return-type": "text"
+    },
+
+    "custom/wallpaper": {
+        "format": "󰸉",
+        "on-click": "~/.config/waybar/scripts/wallpaper-next.sh",
+        "tooltip-format": "Change Wallpaper\n\nClick to cycle to next wallpaper"
+    },
+
+    "custom/cpu": {
+        "exec": "~/.config/waybar/scripts/cpu-info.sh",
+        "return-type": "json",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/memory": {
+        "exec": "~/.config/waybar/scripts/memory-info.sh",
+        "return-type": "json",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/gpu": {
+        "exec": "~/.config/waybar/scripts/gpu-info.sh",
+        "return-type": "json",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "backlight": {
+        "device": "acpi_video0",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰛑", "󰛒", "󰛓", "󰛔", "󰛕"],
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "tooltip": true,
+        "tooltip-format": "Brightness: {percent}%"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "  ",
+        "format-connected": "󰂱",
+        "format-no-controller": "",
+        "tooltip-format": "Devices connected: {num_connections}",
+        "tooltip-format-connected": "{controller_alias}\n\nConnected: {num_connections}\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}: {device_battery_percentage}%"
+    },
+
+    "network": {
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "format": "{icon}",
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰀂",
+        "format-disconnected": "󰤮",
+        "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+        "tooltip-format-ethernet": "Connected",
+        "tooltip-format-disconnected": "Disconnected",
+        "interval": 3,
+        "scriptspacing": 1
+    },
+
+    "custom/vpn": {
+        "exec": "~/.config/waybar/scripts/vpn-status.sh",
+        "return-type": "json",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " 󰖁 0% ",
+        "format-icons": {
+            "headphone": "  ",
+            "hands-free": "  ",
+            "headset": "  ",
+            "phone": "  ",
+            "portable": "  ",
+            "car": "  ",
+            "default": ["  ", "  ", "  "]
+        },
+        "tooltip": true,
+        "tooltip-format": "Volume: {volume}%"
+    },
+
+    "tray": {
+        "icon-size": 12,
+        "spacing": 17
+    },
+
+    "group/tray-expander": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 600,
+            "children-class": "tray-group-item"
+        },
+        "modules": ["custom/expand-icon", "tray"]
+    },
+
+    "custom/expand-icon": {
+        "format": "◀",
+        "class": "expand-icon"
+    },
+
+    "hyprland/window": {
+        "swap-icon-label": false
+    },
+
+    "hyprland/language": {
+        "format": "{long}"
+    },
+
+    "keyboard-state": {
+        "numlock": false,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    }
+}

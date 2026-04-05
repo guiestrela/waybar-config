@@ -1,0 +1,606 @@
+@import "../omarchy/current/theme/waybar.css";
+
+@define-color color-bg                                  @background;
+@define-color color-fg                                  @foreground;
+@define-color color-button-bg                           #89b4fa;
+@define-color color-button-fg                           #282828;
+@define-color color-button-urgent-bg                    #f38ba8;
+@define-color color-button-urgent-fg                    #282828;
+@define-color color-workspace-button-bg                 #45475a;
+@define-color color-workspace-button-fg                 @foreground;
+@define-color color-workspace-button-hover-bg           #585b70;
+@define-color color-workspace-button-hover-fg           @foreground;
+@define-color color-workspace-button-focused-bg         #89b4fa;
+@define-color color-workspace-button-focused-fg         #282828;
+@define-color color-widget-audio-bg                     #f9e2af;
+@define-color color-widget-audio-fg                     #282828;
+@define-color color-widget-audio-hover-bg               #f9e2af;
+@define-color color-widget-audio-hover-fg               #282828;
+@define-color color-widget-audio-muted-bg               #f9e2af;
+@define-color color-widget-audio-muted-fg               #282828;
+@define-color color-widget-clock-bg                     #cba6f7;
+@define-color color-widget-clock-fg                     #282828;
+@define-color color-widget-battery-bg                   #a6e3a1;
+@define-color color-widget-battery-fg                   #282828;
+@define-color color-widget-battery-low-bg               #f38ba8;
+@define-color color-widget-battery-low-fg               #282828;
+@define-color color-widget-battery-low-blink-bg         #f38ba8;
+@define-color color-widget-battery-low-blink-fg         #282828;
+@define-color color-widget-backlight-bg                 #fab387;
+@define-color color-widget-backlight-fg                 #282828;
+@define-color color-widget-temperature-bg               #94e2d5;
+@define-color color-widget-temperature-fg               #282828;
+@define-color color-widget-temperature-critical-bg      #f38ba8;
+@define-color color-widget-temperature-critical-fg      #282828;
+@define-color color-widget-memory-bg                    #89b4fa;
+@define-color color-widget-memory-fg                    #282828;
+@define-color color-widget-cpu-bg                       #f5c2e7;
+@define-color color-widget-cpu-fg                       #282828;
+@define-color color-widget-power-profile-balanced-bg    #cba6f7;
+@define-color color-widget-power-profile-balanced-fg    #282828;
+@define-color color-widget-power-profile-performance-bg #fab387;
+@define-color color-widget-power-profile-performance-fg #282828;
+@define-color color-widget-power-profile-saver-bg       #a6e3a1;
+@define-color color-widget-power-profile-saver-fg       #282828;
+@define-color color-widget-tray-bg                      #45475a;
+@define-color color-widget-tray-needs-attention         #f38ba8;
+@define-color color-widget-idle-inhibitor-off-bg        #45475a;
+@define-color color-widget-idle-inhibitor-off-fg        #a89984;
+@define-color color-widget-idle-inhibitor-on-bg         #a6e3a1;
+@define-color color-widget-idle-inhibitor-on-fg         #282828;
+@define-color color-widget-scratchpad-bg                #ff0000;
+@define-color color-widget-scratchpad-fg                #ff0000;
+@define-color color-widget-power-bg                     #89dceb;
+@define-color color-widget-power-fg                     #282828;
+@define-color color-widget-window-bg                    #cba6f7;
+@define-color color-widget-window-fg                    #282828;
+@define-color color-widget-keyboard-state-bg            #fab387;
+@define-color color-widget-keyboard-state-fg            #282828;
+@define-color color-widget-language-bg                 #fab387;
+@define-color color-widget-language-fg                 #282828;
+@define-color color-widget-omarchy-bg                  #a6e3a1;
+@define-color color-widget-omarchy-fg                  #282828;
+@define-color color-widget-vpn-bg                       #a6e3a1;
+@define-color color-widget-vpn-fg                       #000000;
+@define-color color-tooltip-bg                          @background;
+@define-color color-tooltip-fg                          @foreground;
+@define-color color-menu-bg                             @background;
+@define-color color-menuitem-bg                         @color-menu-bg;
+@define-color color-menuitem-fg                         @foreground;
+@define-color color-menuitem-hover-bg                   mix(@color-menu-bg, @foreground, 0.1);
+@define-color color-menuitem-hover-fg                   #89b4fa;
+@define-color color-menuitem-active-bg                  #89b4fa;
+@define-color color-menuitem-active-fg                  #282828;
+@define-color color-gradient-fade                       #fbf1c7;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 0px;
+}
+
+window#waybar {
+    background: transparent;
+    border: none;
+    margin: 0px;
+}
+
+window#waybar > * {
+    margin: 2px;
+    margin-bottom: 2px;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+button {
+    border: none;
+    background-color: @color-button-bg;
+    border-radius: 0px;
+}
+
+button:hover {
+    background: inherit;
+}
+
+#pulseaudio:hover {
+    background: @color-bg;
+    color: @color-fg;
+    border-color: @color-widget-audio-hover-bg;
+}
+
+#workspaces {
+    padding: 0;
+    margin: 0;
+}
+
+#workspaces button {
+    transition: none;
+    padding: 0;
+    min-height: 0px;
+    min-width: 25px;
+    margin-left: 0px;
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-workspace-button-bg;
+}
+
+#workspaces button:hover {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-workspace-button-hover-bg;
+}
+
+#workspaces button.active {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-workspace-button-focused-bg;
+}
+
+#workspaces button.urgent {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-button-urgent-bg;
+}
+
+#mode {
+    background-color: #ff0000;
+    box-shadow: inset 0 -3px #0000ff;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#custom-notifications,
+#custom-power,
+#keyboard-state,
+#language,
+#window,
+#mpd,
+#custom-weather,
+#custom-pomodoro,
+#custom-wallpaper,
+#custom-cpu,
+#custom-memory,
+#custom-gpu,
+#custom-vpn,
+#custom-screenrecording-indicator,
+#bluetooth {
+    padding: 0px 12px;
+    border-radius: 0px;
+}
+
+#custom-power {
+    margin-left: 10px;
+}
+
+#window,
+#workspaces {
+    margin: 0px 4px;
+}
+
+#workspaces {
+    margin: 0px;
+}
+
+#window {
+    margin-left: 6px;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#custom-power {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-power-bg;
+    font-size: 18px;
+    margin-right: 4px;
+}
+
+#window {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-window-bg;
+}
+
+window#waybar.empty #window {
+    background: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#clock {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-clock-bg;
+}
+
+#custom-weather {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-backlight-bg;
+}
+
+#custom-pomodoro {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-workspace-button-focused-bg;
+}
+
+#custom-wallpaper {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-backlight-bg;
+}
+
+#custom-screenrecording-indicator {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-button-urgent-bg;
+}
+
+#custom-vpn {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-vpn-bg;
+}
+
+#battery {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-battery-bg;
+}
+
+#battery.charging, #battery.plugged {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-battery-bg;
+}
+
+@keyframes blink-battery-low {
+    to {
+        background: @color-bg;
+        color: @color-fg;
+        border-color: @color-widget-battery-low-blink-bg;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-battery-low-bg;
+    animation-name: blink-battery-low;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#power-profiles-daemon {
+}
+
+#power-profiles-daemon.performance {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-power-profile-performance-bg;
+}
+
+#power-profiles-daemon.balanced {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-power-profile-balanced-bg;
+}
+
+#power-profiles-daemon.power-saver {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-power-profile-saver-bg;
+}
+
+label:focus {
+    background-color: #ff0000;
+}
+
+#cpu,
+#custom-cpu {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-cpu-bg;
+}
+
+#memory,
+#custom-memory {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-memory-bg;
+}
+
+#custom-gpu {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-temperature-bg;
+}
+
+#disk {
+    background-color: #ff0000;
+}
+
+#backlight {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-backlight-bg;
+}
+
+#network {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #fab387;
+}
+
+#network.disconnected {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #ff0000;
+}
+
+#bluetooth {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #89b4fa;
+}
+
+#bluetooth.disabled {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #585b70;
+}
+
+#bluetooth.connected {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #89b4fa;
+}
+
+#pulseaudio {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-audio-bg;
+}
+
+#pulseaudio.muted {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-audio-muted-bg;
+}
+
+#keyboard-state {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-keyboard-state-bg;
+}
+
+#keyboard-state > label {
+    padding: 0px;
+}
+
+#keyboard-state > label.locked {
+    background: transparent;
+}
+
+#language {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-language-bg;
+}
+
+#wireplumber {
+    background-color: #ff0000;
+    color: #00ff00;
+}
+
+#wireplumber.muted {
+    background-color: #0000ff;
+}
+
+#custom-media {
+    background-color: #ff0000;
+    color: #0000ff;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: #00ff00;
+}
+
+#custom-media.custom-vlc {
+    background-color: #ff0000;
+}
+
+#temperature {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-temperature-bg;
+}
+
+#temperature.critical {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-temperature-critical-bg;
+}
+
+#tray {
+    background: @color-bg;
+    border: 2px solid @color-widget-tray-bg;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: @color-bg;
+    border-color: @color-widget-tray-needs-attention;
+}
+
+#custom-expand-icon {
+    background: transparent;
+    color: @color-fg;
+    padding: 0px 8px;
+}
+
+.tray-group-item {
+    background: @color-bg;
+    border: 2px solid @color-widget-tray-bg;
+    padding: 0px 8px;
+}
+
+#idle_inhibitor {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-idle-inhibitor-off-bg;
+}
+
+#idle_inhibitor.activated {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-idle-inhibitor-on-bg;
+}
+
+#mpd {
+    background: #ff0000;
+    color: #0000ff;
+}
+
+#mpd.disconnected {
+    background-color: #00ff00;
+}
+
+#mpd.stopped {
+    background-color: #ff0000;
+}
+
+#mpd.paused {
+    background-color: #ffff00;
+}
+
+#scratchpad {
+    background: linear-gradient(to top, @color-widget-scratchpad-bg, mix(@color-widget-scratchpad-bg, @color-gradient-fade, 0.25));
+    color: @color-widget-scratchpad-fg;
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+}
+
+#privacy {
+    padding: 0;
+}
+
+#privacy-item {
+    padding: 0 5px;
+    color: #ff0000;
+}
+
+#privacy-item.screenshare {
+    background-color: #ff0000;
+}
+
+#privacy-item.audio-in {
+    background-color: #0000ff;
+}
+
+#privacy-item.audio-out {
+    background-color: #00ff00;
+}
+
+tooltip {
+    background-color: @color-tooltip-bg;
+    border: none;
+    border-radius: 4px;
+    opacity: 1;
+    font-weight: normal;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+tooltip decoration {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+tooltip decoration:backdrop {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+tooltip label {
+    color: @color-tooltip-fg;
+    padding: 3px 7px;
+    font-weight: normal;
+    opacity: 1;
+    text-shadow: none;
+}
+
+tooltip * {
+    font-weight: normal;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+menu {
+    background: @color-menu-bg;
+    border-radius: 20px;
+}
+
+menu label {
+    color: #ff0000;
+}
+
+menuitem {
+    background: @color-menuitem-bg;
+}
+
+menuitem label {
+    color: @color-menuitem-fg;
+}
+
+menuitem:focus,
+menuitem:hover {
+    background: @color-menuitem-hover-bg;
+}
+
+menuitem:focus label,
+menuitem:hover label {
+    color: @color-menuitem-hover-fg;
+}
+
+menuitem:active {
+    background: @color-menuitem-active-bg;
+}
+
+menuitem:active label {
+    color: @color-menuitem-active-fg;
+}
