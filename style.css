@@ -176,9 +176,14 @@ button:hover {
 #custom-weather,
 #custom-pomodoro,
 #custom-wallpaper,
+#custom-claude-usage,
+#custom-codex-usage,
+#custom-copilot-usage,
+#custom-opencode-usage,
 #custom-cpu,
 #custom-memory,
 #custom-gpu,
+#custom-ai-expand-icon,
 #custom-vpn,
 #custom-screenrecording-indicator,
 #bluetooth {
@@ -253,6 +258,54 @@ window#waybar.empty #window {
     background: @color-bg;
     color: @color-fg;
     border: 2px solid @color-widget-backlight-bg;
+}
+
+#custom-claude-usage {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #16a34a;
+}
+
+#custom-claude-usage.claude-mid {
+    border: 2px solid #d4a017;
+}
+
+#custom-claude-usage.claude-high {
+    border: 2px solid #ff0000;
+}
+
+#custom-codex-usage {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #16a34a;
+}
+
+#custom-codex-usage.codex-mid {
+    border: 2px solid #d4a017;
+}
+
+#custom-codex-usage.codex-high {
+    border: 2px solid #ff0000;
+}
+
+#custom-copilot-usage {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #16a34a;
+}
+
+#custom-copilot-usage.copilot-mid {
+    border: 2px solid #d4a017;
+}
+
+#custom-copilot-usage.copilot-high {
+    border: 2px solid #ff0000;
+}
+
+#custom-opencode-usage {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #9b59b6;
 }
 
 #custom-screenrecording-indicator {
@@ -471,9 +524,22 @@ label:focus {
     padding: 0px 8px;
 }
 
+#custom-ai-expand-icon {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #ff6347;
+    padding: 0px 8px;
+}
+
 .tray-group-item {
     background: @color-bg;
     border: 2px solid @color-widget-tray-bg;
+    padding: 0px 8px;
+}
+
+.ai-tray-item {
+    background: @color-bg;
+    border: 2px solid #ff6347;
     padding: 0px 8px;
 }
 

@@ -16,7 +16,8 @@
         "clock",
         "custom/weather",
         "custom/pomodoro",
-        "custom/wallpaper"
+        "custom/wallpaper",
+        "group/ai-tray"
     ],
     "modules-center": [
         "hyprland/workspaces"
@@ -67,6 +68,38 @@
         "format": "󰸉",
         "on-click": "~/.config/waybar/scripts/wallpaper-next.sh",
         "tooltip-format": "Change Wallpaper\n\nClick to cycle to next wallpaper"
+    },
+
+    "custom/codex-usage": {
+        "exec": "~/.config/waybar/scripts/codex-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+        "return-type": "json",
+        "interval": 120,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/copilot-usage": {
+        "exec": "~/.config/waybar/scripts/copilot-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+        "return-type": "json",
+        "interval": 60,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/opencode-usage": {
+        "exec": "~/.config/waybar/scripts/opencode-usage-simple.py --waybar",
+        "return-type": "json",
+        "interval": 120,
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/claude-usage": {
+        "exec": "~/.config/waybar/scripts/claude-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+        "return-type": "json",
+        "interval": 120,
+        "format": "{}",
+        "tooltip": true
     },
 
     "custom/cpu": {
@@ -193,6 +226,27 @@
     "custom/expand-icon": {
         "format": "◀",
         "class": "expand-icon"
+    },
+
+    "group/ai-tray": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 600,
+            "children-class": "ai-tray-item"
+        },
+        "modules": [
+            "custom/ai-expand-icon",
+            "custom/opencode-usage",
+            "custom/claude-usage",
+            "custom/codex-usage",
+            "custom/copilot-usage"
+        ]
+    },
+
+    "custom/ai-expand-icon": {
+        "format": "",
+        "class": "ai-expand-icon",
+        "tooltip-format": "AI Services"
     },
 
     "hyprland/window": {

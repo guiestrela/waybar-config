@@ -17,9 +17,42 @@ A clean Waybar configuration for Hyprland, based on Omarchy defaults.
 - **Pomodoro Timer**: Focus timer with controls
 - **Wallpaper**: Quick wallpaper switching
 - **Tray**: Expandable system tray
+- **AI Tray**: Opencode, Claude, Codex and Copilot usage modules
 - **Workspaces**: Hyprland workspace integration
 
 ## Installation
+
+### Quick install (recommended)
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+With dependencies (Arch Linux):
+
+```bash
+./install.sh --install-deps
+```
+
+### Backup + update this repo from current ~/.config
+
+```bash
+chmod +x backup-and-update-repo.sh
+./backup-and-update-repo.sh
+```
+
+This creates a timestamped backup in `./backups/` and then syncs:
+- `~/.config/waybar/config.jsonc` -> `./config.jsonc`
+- `~/.config/waybar/style.css` -> `./style.css`
+- `~/.config/waybar/scripts/*` -> `./scripts/`
+- `~/.config/waybar-ai-usage/*.example` -> `./ai-config/`
+
+Optional (copies real tokens too):
+
+```bash
+./backup-and-update-repo.sh --include-secrets
+```
 
 ### 1. Backup existing config
 
@@ -32,11 +65,13 @@ mv ~/.config/waybar/config.jsonc ~/.config/waybar/config.jsonc.bak
 ```bash
 # Create scripts directory if it doesn't exist
 mkdir -p ~/.config/waybar/scripts
+mkdir -p ~/.config/waybar-ai-usage
 
 # Copy all files
 cp config.jsonc ~/.config/waybar/config.jsonc
 cp style.css ~/.config/waybar/style.css
 cp scripts/* ~/.config/waybar/scripts/
+cp ai-config/*.example ~/.config/waybar-ai-usage/
 ```
 
 ### 3. Required Dependencies
@@ -63,6 +98,7 @@ jq
 
 ```bash
 chmod +x ~/.config/waybar/scripts/*.sh
+chmod +x ~/.config/waybar/scripts/*.py
 ```
 
 ### 5. Restart Waybar
@@ -84,6 +120,19 @@ Replace placeholders in your scripts:
 # Example in weather.sh
 API_KEY="YOUR_OPENWEATHERMAP_API_KEY"
 ```
+
+### AI Config
+
+For AI modules, create and edit token files:
+
+```bash
+cp ~/.config/waybar-ai-usage/copilot.conf.example ~/.config/waybar-ai-usage/copilot.conf
+cp ~/.config/waybar-ai-usage/codex.conf.example ~/.config/waybar-ai-usage/codex.conf
+```
+
+- `copilot.conf`: set `GITHUB_TOKEN=...`
+- `codex.conf`: set `OPENAI_API_KEY=...` (optional, local Codex state is used first)
+- `claude-usage`: uses browser cookies from Claude login session (no token file)
 
 ### Customizing Modules
 
