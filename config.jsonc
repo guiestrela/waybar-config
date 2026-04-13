@@ -1,269 +1,341 @@
 // -*- mode: jsonc -*-
-// Waybar Configuration
-// Based on Omarchy defaults with customizations
-
 {
-    "reload_style_on_change": true,
-    "layer": "top",
-    "position": "top",
-    "gtk-layer-shell": true,
-    "swap-icon-label": false,
-    "margin-top": 0,
-    "margin-left": 0,
-    "margin-right": 0,
-    "spacing": 4,
-    "modules-left": [
-        "clock",
-        "custom/weather",
-        "custom/pomodoro",
-        "custom/wallpaper",
-        "group/ai-tray"
-    ],
-    "modules-center": [
-        "hyprland/workspaces"
-    ],
-    "modules-right": [
-        "group/tray-expander",
-        "power-profiles-daemon",
-        "bluetooth",
-        "network",
-        "custom/vpn",
-        "pulseaudio",
-        "custom/cpu",
-        "custom/memory",
-        "custom/gpu",
-        "backlight",
-        "battery"
-    ],
-
-    "hyprland/workspaces": {
-        "swap-icon-label": false
-    },
-
-    "clock": {
-        "format": "{:L%a %d - %I:%M %p}",
-        "tooltip-format": "{:L%d %B %Y}",
-        "tooltip": true
-    },
-
-    "custom/weather": {
-        "interval": 240,
-        "exec": "~/.config/waybar/scripts/weather.sh",
-        "return-type": "json",
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/pomodoro": {
-        "exec": "~/.config/waybar/scripts/pomodoro-status.sh",
-        "interval": 1,
-        "on-click": "~/.config/waybar/scripts/pomodoro-control.sh start",
-        "on-click-right": "~/.config/waybar/scripts/pomodoro-control.sh reset",
-        "on-click-backward": "~/.config/waybar/scripts/pomodoro-control.sh pause",
-        "on-click-forward": "~/.config/waybar/scripts/pomodoro-control.sh pause",
-        "return-type": "text"
-    },
-
-    "custom/wallpaper": {
-        "format": "󰸉",
-        "on-click": "~/.config/waybar/scripts/wallpaper-next.sh",
-        "tooltip-format": "Change Wallpaper\n\nClick to cycle to next wallpaper"
-    },
-
-    "custom/codex-usage": {
-        "exec": "~/.config/waybar/scripts/codex-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
-        "return-type": "json",
-        "interval": 120,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/copilot-usage": {
-        "exec": "~/.config/waybar/scripts/copilot-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
-        "return-type": "json",
-        "interval": 60,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/opencode-usage": {
-        "exec": "~/.config/waybar/scripts/opencode-usage-simple.py --waybar",
-        "return-type": "json",
-        "interval": 120,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/claude-usage": {
-        "exec": "~/.config/waybar/scripts/claude-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
-        "return-type": "json",
-        "interval": 120,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/cpu": {
-        "exec": "~/.config/waybar/scripts/cpu-info.sh",
-        "return-type": "json",
-        "interval": 2,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/memory": {
-        "exec": "~/.config/waybar/scripts/memory-info.sh",
-        "return-type": "json",
-        "interval": 2,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "custom/gpu": {
-        "exec": "~/.config/waybar/scripts/gpu-info.sh",
-        "return-type": "json",
-        "interval": 2,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "backlight": {
-        "device": "acpi_video0",
-        "format": "{icon} {percent}%",
-        "format-icons": ["󰛑", "󰛒", "󰛓", "󰛔", "󰛕"],
-        "on-scroll-up": "brightnessctl set +5%",
-        "on-scroll-down": "brightnessctl set 5%-",
-        "tooltip": true,
-        "tooltip-format": "Brightness: {percent}%"
-    },
-
-    "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-
-    "power-profiles-daemon": {
-        "format": "{icon}",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-        "tooltip": true,
-        "format-icons": {
-            "default": "",
-            "performance": "",
-            "balanced": "",
-            "power-saver": ""
-        }
-    },
-
-    "bluetooth": {
-        "format": "",
-        "format-disabled": "  ",
-        "format-connected": "󰂱",
-        "format-no-controller": "",
-        "tooltip-format": "Devices connected: {num_connections}",
-        "tooltip-format-connected": "{controller_alias}\n\nConnected: {num_connections}\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}: {device_battery_percentage}%"
-    },
-
-    "network": {
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-        "format": "{icon}",
-        "format-wifi": "{icon}",
-        "format-ethernet": "󰀂",
-        "format-disconnected": "󰤮",
-        "tooltip-format-wifi": "{essid} ({frequency} GHz)",
-        "tooltip-format-ethernet": "Connected",
-        "tooltip-format-disconnected": "Disconnected",
-        "interval": 3,
-        "scriptspacing": 1
-    },
-
-    "custom/vpn": {
-        "exec": "~/.config/waybar/scripts/vpn-status.sh",
-        "return-type": "json",
-        "interval": 2,
-        "format": "{}",
-        "tooltip": true
-    },
-
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": " 󰖁 0% ",
-        "format-icons": {
-            "headphone": "  ",
-            "hands-free": "  ",
-            "headset": "  ",
-            "phone": "  ",
-            "portable": "  ",
-            "car": "  ",
-            "default": ["  ", "  ", "  "]
-        },
-        "tooltip": true,
-        "tooltip-format": "Volume: {volume}%"
-    },
-
-    "tray": {
-        "icon-size": 12,
-        "spacing": 17
-    },
-
-    "group/tray-expander": {
-        "orientation": "inherit",
-        "drawer": {
-            "transition-duration": 600,
-            "children-class": "tray-group-item"
-        },
-        "modules": ["custom/expand-icon", "tray"]
-    },
-
-    "custom/expand-icon": {
-        "format": "◀",
-        "class": "expand-icon"
-    },
-
-    "group/ai-tray": {
-        "orientation": "inherit",
-        "drawer": {
-            "transition-duration": 600,
-            "children-class": "ai-tray-item"
-        },
-        "modules": [
-            "custom/ai-expand-icon",
-            "custom/opencode-usage",
-            "custom/claude-usage",
-            "custom/codex-usage",
-            "custom/copilot-usage"
-        ]
-    },
-
-    "custom/ai-expand-icon": {
-        "format": "",
-        "class": "ai-expand-icon",
-        "tooltip-format": "AI Services"
-    },
-
-    "hyprland/window": {
-        "swap-icon-label": false
-    },
-
-    "hyprland/language": {
-        "format": "{long}"
-    },
-
-    "keyboard-state": {
-        "numlock": false,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
+  "reload_style_on_change": true,
+  "layer": "top", // Waybar at top layer
+  "position": "top", // Waybar position (top|bottom|left|right)
+  "gtk-layer-shell": true, // Enable explicit gtk layer shell support
+  "swap-icon-label": false,
+  "margin-top": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  // "height": 18, // Waybar height (to be removed for auto height)
+  // "width": 1280, // Waybar width
+  "spacing": 4, // Gaps between modules (4px)
+  // Choose the order of the modules
+  "modules-left": [
+    "clock",
+    "custom/weather",
+    "custom/pomodoro",
+    "custom/wallpaper",
+    //"hyprland/window",
+    "group/ai-tray"
+  ],
+  "modules-center": [
+    "custom/omarchy",
+    "hyprland/workspaces",
+    "custom/update",
+    "custom/screenrecording-indicator"
+    //"custom/voxtype"
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "power-profiles-daemon",
+    "bluetooth",
+    "network",
+    "custom/vpn",
+    "pulseaudio",
+    "custom/cpu",
+    "custom/memory",
+    "custom/gpu"
+    //"backlight",
+    //"battery"
+  ],
+  "hyprland/workspaces": {
+    "swap-icon-label": false
+  },
+  //"hyprland/workspaces": {
+    //"disable-scroll": true,
+    //"active-only": false,
+    //"all-outputs": true,
+    //"warp-on-scroll": false,
+    //"format": "{icon}",
+    //"format-icons": {
+      //"1": "<span>󰧨</span>",
+      //"2": "<span>󰈹</span>",
+      //"3": "<span></span>",
+      //"4": "<span></span>",
+      //"5": "<span></span>",
+      //"6": "<span>󰭛</span>",
+      //"7": "<span>󱓷</span>",
+      //"8": "<span>󰚀</span>"
+    //}
+  //},
+  "hyprland/window": {
+    "swap-icon-label": false
+  },
+  "custom/omarchy": {
+    "format": "<span font='omarchy'>\ue900</span>",
+    //"format": "<span font='omarchy'></span>",
+    "on-click": "omarchy-menu",
+    "on-click-right": "xdg-terminal-exec",
+    "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
+  },
+  "custom/update": {
+    "format": "",
+    "exec": "omarchy-update-available",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "tooltip-format": "Omarchy update available",
+    "signal": 7,
+    "interval": 21600
+  },
+  "custom/weather": {
+    "interval": 240,
+    "exec": "~/.config/waybar/scripts/weather.py",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true
+  },
+  "custom/pomodoro": {
+    "exec": "~/.config/waybar/scripts/pomodoro.sh status",
+    "interval": 1,
+    "on-click": "~/.config/waybar/scripts/pomodoro.sh start",
+    "on-click-right": "~/.config/waybar/scripts/pomodoro.sh reset",
+    "on-click-backward": "~/.config/waybar/scripts/pomodoro.sh pause",
+    "on-click-forward": "~/.config/waybar/scripts/pomodoro.sh pause",
+    "return-type": "text"
+  },
+  "custom/wallpaper": {
+    "format": "󰸉",
+    "on-click": "~/.config/waybar/scripts/wallpaper-next.sh",
+    "tooltip-format": "Change Wallpaper\n\nClick to cycle to next wallpaper"
+  },
+  "custom/claude-usage": {
+    "exec": "~/.config/waybar/scripts/claude-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+    "return-type": "json",
+    "interval": 120,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Claude -e claude",
+    "on-click-right": "pkill -RTMIN+8 waybar",
+    "signal": 8
+  },
+  "custom/codex-usage": {
+    "exec": "~/.config/waybar/scripts/codex-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+    "return-type": "json",
+    "interval": 120,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Codex -e codex",
+    "on-click-right": "pkill -RTMIN+9 waybar",
+    "signal": 9
+  },
+  "custom/copilot-usage": {
+    "exec": "~/.config/waybar/scripts/copilot-usage-simple.py --waybar --format '{icon_plain} {pct}%'",
+    "return-type": "json",
+    "interval": 60,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Copilot -e copilot",
+    "on-click-right": "pkill -RTMIN+10 waybar",
+    "signal": 10
+  },
+  "custom/ollama-status": {
+    "exec": "~/.config/waybar/scripts/ollama-status.py",
+    "return-type": "json",
+    "interval": 30,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Ollama -e ollama",
+    "on-click-right": "pkill -RTMIN+11 waybar",
+    "signal": 11
+  },
+  "custom/opencode-usage": {
+    "exec": "~/.config/waybar/scripts/opencode-usage-simple.py --waybar",
+    "return-type": "json",
+    "interval": 120,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Opencode -e opencode",
+    "on-click-right": "pkill -RTMIN+12 waybar",
+    "signal": 12
+  },
+  "hyprland/language": {
+    "format": "{long}"
+  },
+  "keyboard-state": {
+    "numlock": false,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
     }
+  },
+  "custom/screenrecording-indicator": {
+    "on-click": "omarchy-cmd-screenrecord",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
+    "signal": 8,
+    "return-type": "json"
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 17
+  },
+  "custom/voxtype": {
+    "exec": "omarchy-voxtype-status",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "idle": "",
+      "recording": "󰍬",
+      "transcribing": "󰔟"
+    },
+    "tooltip": true,
+    "on-click-right": "omarchy-voxtype-config",
+    "on-click": "omarchy-voxtype-model"
+  },
+  "clock": {
+    "format": " {:%a %d | %I:%M %p}",
+    "tooltip-format": "{:L%d %B %Y}",
+    "tooltip": true,
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
+  },
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/cpu-info.sh",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "omarchy-launch-or-focus-tui btop",
+    "on-click-right": "ghostty"
+  },
+  "custom/memory": {
+    "exec": "~/.config/waybar/scripts/memory-info.sh",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "omarchy-launch-or-focus-tui btop"
+  },
+  "custom/gpu": {
+    "exec": "~/.config/waybar/scripts/gpu-info.sh",
+    "return-type": "json",
+    "format": "{}",
+    "interval": 2,
+    "tooltip": true,
+    "on-click": "omarchy-launch-or-focus-tui btop"
+  },
+  "backlight": {
+    "device": "acpi_video0",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰛑", "󰛒", "󰛓", "󰛔", "󰛕"],
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "on-click": "~/.config/waybar/scripts/brightness-toggle.sh",
+    "tooltip": true,
+    "tooltip-format": "Brightness: {percent}%"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-full": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
+    // "format-good": "", // An empty format will hide the module
+    // "format-full": "",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "battery#bat2": {
+    "bat": "BAT2"
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "tooltip-format-connected": "{controller_alias}\n\nConnected: {num_connections}\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}: {device_battery_percentage}%",
+    "on-click": "omarchy-launch-bluetooth"
+  },
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    //"format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "scriptspacing": 1,
+    "on-click": "omarchy-launch-wifi"
+  },
+  "custom/vpn": {
+    "exec": "~/.config/waybar/scripts/vpn-status.sh",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": true
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": " 󰖁 0% ",
+    "format-icons": {
+      "headphone": "  ",
+      "hands-free": "  ",
+      "headset": "  ",
+      "phone": "  ",
+      "portable": "  ",
+      "car": "  ",
+      "default": [
+        "  ",
+        "  ",
+        "  "
+      ]
+    },
+    "on-click": "omarchy-launch-audio",
+    "on-click-right": "pactl -- set-sink-mute 0 toggle",
+    "tooltip": true,
+    "tooltip-format": "Volume: {volume}%"
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": ["custom/expand-icon", "tray"]
+  },
+  "custom/expand-icon": {
+    "format": "◀",
+    "class": "expand-icon"
+  },
+  "group/ai-tray": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "ai-tray-item"
+    },
+    "modules": [
+      "custom/ai-expand-icon",
+      //"custom/ollama-status",
+      "custom/opencode-usage",
+      //"custom/claude-usage",
+      "custom/codex-usage",
+      "custom/copilot-usage"
+    ]
+  },
+  "custom/ai-expand-icon": {
+    "format": " ",
+    "class": "ai-expand-icon",
+    "tooltip-format": "AI Services"
+  }
 }

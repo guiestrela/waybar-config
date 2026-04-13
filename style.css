@@ -56,10 +56,10 @@
 @define-color color-widget-window-fg                    #282828;
 @define-color color-widget-keyboard-state-bg            #fab387;
 @define-color color-widget-keyboard-state-fg            #282828;
-@define-color color-widget-language-bg                 #fab387;
-@define-color color-widget-language-fg                 #282828;
-@define-color color-widget-omarchy-bg                  #a6e3a1;
-@define-color color-widget-omarchy-fg                  #282828;
+@define-color color-widget-language-bg                  #fab387;
+@define-color color-widget-language-fg                  #282828;
+@define-color color-widget-omarchy-bg                   #a6e3a1;
+@define-color color-widget-omarchy-fg                   #282828;
 @define-color color-widget-vpn-bg                       #a6e3a1;
 @define-color color-widget-vpn-fg                       #000000;
 @define-color color-tooltip-bg                          @background;
@@ -74,6 +74,8 @@
 @define-color color-gradient-fade                       #fbf1c7;
 
 * {
+
+
     font-family: "JetBrainsMono Nerd Font", monospace;
     font-size: 12px;
     font-weight: bold;
@@ -102,10 +104,12 @@ button {
     border-radius: 0px;
 }
 
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
 }
 
+/* you can set a style on hover for any module like this */
 #pulseaudio:hover {
     background: @color-bg;
     color: @color-fg;
@@ -173,17 +177,19 @@ button:hover {
 #language,
 #window,
 #mpd,
+#custom-omarchy,
+#custom-update,
 #custom-weather,
 #custom-pomodoro,
 #custom-wallpaper,
 #custom-claude-usage,
 #custom-codex-usage,
 #custom-copilot-usage,
+#custom-ollama-status,
 #custom-opencode-usage,
 #custom-cpu,
 #custom-memory,
 #custom-gpu,
-#custom-ai-expand-icon,
 #custom-vpn,
 #custom-screenrecording-indicator,
 #bluetooth {
@@ -208,10 +214,12 @@ button:hover {
     margin-left: 6px;
 }
 
+/* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
+/* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
     margin-right: 0;
 }
@@ -240,6 +248,19 @@ window#waybar.empty #window {
     background: @color-bg;
     color: @color-fg;
     border: 2px solid @color-widget-clock-bg;
+}
+
+#custom-omarchy {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-widget-omarchy-bg;
+    /*padding: 0px 10px;*/
+}
+
+#custom-update {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid @color-button-urgent-bg;
 }
 
 #custom-weather {
@@ -274,6 +295,10 @@ window#waybar.empty #window {
     border: 2px solid #ff0000;
 }
 
+#custom-claude-usage.critical {
+    border: 2px solid #ff0000;
+}
+
 #custom-codex-usage {
     background: @color-bg;
     color: @color-fg;
@@ -286,6 +311,11 @@ window#waybar.empty #window {
 
 #custom-codex-usage.codex-high {
     border: 2px solid #ff0000;
+}
+
+#custom-codex-usage.critical,
+#custom-codex-usage.codex-unavailable {
+    border: 2px solid #16a34a;
 }
 
 #custom-copilot-usage {
@@ -302,10 +332,36 @@ window#waybar.empty #window {
     border: 2px solid #ff0000;
 }
 
+#custom-copilot-usage.critical {
+    border: 2px solid #ff0000;
+}
+
+#custom-ollama-status {
+    background: @color-bg;
+    color: @color-fg;
+    border: 2px solid #6dd3a0;
+}
+
+#custom-ollama-status.ollama-empty {
+    border: 2px solid #f9e2af;
+}
+
+#custom-ollama-status.ollama-off {
+    border: 2px solid #f38ba8;
+}
+
+#custom-ollama-status.critical {
+    border: 2px solid #ff0000;
+}
+
 #custom-opencode-usage {
     background: @color-bg;
     color: @color-fg;
-    border: 2px solid #9b59b6;
+    border: 2px solid #9B59B6;
+}
+
+#custom-opencode-usage.critical {
+    border: 2px solid #ff0000;
 }
 
 #custom-screenrecording-indicator {
@@ -332,6 +388,9 @@ window#waybar.empty #window {
     border: 2px solid @color-widget-battery-bg;
 }
 
+#battery.charging {
+}
+
 @keyframes blink-battery-low {
     to {
         background: @color-bg;
@@ -340,6 +399,10 @@ window#waybar.empty #window {
     }
 }
 
+#battery:not(.charging) {
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
     background: @color-bg;
     color: @color-fg;
@@ -529,6 +592,7 @@ label:focus {
     color: @color-fg;
     border: 2px solid #ff6347;
     padding: 0px 8px;
+    border-radius: 0px;
 }
 
 .tray-group-item {
@@ -541,6 +605,7 @@ label:focus {
     background: @color-bg;
     border: 2px solid #ff6347;
     padding: 0px 8px;
+    border-radius: 0px;
 }
 
 #idle_inhibitor {
@@ -578,7 +643,7 @@ label:focus {
 }
 
 #scratchpad.empty {
-    background-color: transparent;
+	background-color: transparent;
 }
 
 #privacy {

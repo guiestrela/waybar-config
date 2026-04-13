@@ -35,14 +35,14 @@ With dependencies (Arch Linux):
 ./install.sh --install-deps
 ```
 
-### Backup + update this repo from current ~/.config
+### Update this repo from current ~/.config
 
 ```bash
 chmod +x backup-and-update-repo.sh
 ./backup-and-update-repo.sh
 ```
 
-This creates a timestamped backup in `./backups/` and then syncs:
+This syncs by replacing existing files and adding missing ones:
 - `~/.config/waybar/config.jsonc` -> `./config.jsonc`
 - `~/.config/waybar/style.css` -> `./style.css`
 - `~/.config/waybar/scripts/*` -> `./scripts/`

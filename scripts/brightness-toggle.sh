@@ -1,15 +1,13 @@
 #!/bin/bash
-# Brightness Toggle Script for Waybar
-# Toggles between max brightness and 50%
 
-current=$(brightnessctl get)
-max=$(brightnessctl max)
+# Alterna entre brilho mínimo e máximo
+MAX_BRIGHTNESS=$(brightnessctl max)
+CURRENT=$(brightnessctl get)
 
-if [ "$current" -eq "$max" ]; then
-    # Set to 50%
-    target=$((max / 2))
-    brightnessctl set "$target"
+if [ "$CURRENT" -gt $((MAX_BRIGHTNESS / 2)) ]; then
+    # Brilho alto, diminui para 20%
+    brightnessctl set "20%"
 else
-    # Set to max
-    brightnessctl set "$max"
+    # Brilho baixo, aumenta para 100%
+    brightnessctl set "100%"
 fi

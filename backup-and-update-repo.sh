@@ -6,10 +6,6 @@ SRC_WAYBAR_DIR="${HOME}/.config/waybar"
 SRC_SCRIPTS_DIR="${SRC_WAYBAR_DIR}/scripts"
 SRC_AI_DIR="${HOME}/.config/waybar-ai-usage"
 
-BACKUP_ROOT="${SCRIPT_DIR}/backups"
-STAMP="$(date +%Y%m%d-%H%M%S)"
-BACKUP_DIR="${BACKUP_ROOT}/${STAMP}"
-
 INCLUDE_SECRETS=0
 
 print_help() {
@@ -47,17 +43,7 @@ for required in "${SRC_WAYBAR_DIR}/config.jsonc" "${SRC_WAYBAR_DIR}/style.css"; 
   fi
 done
 
-mkdir -p "${BACKUP_DIR}/scripts" "${BACKUP_DIR}/ai-config"
-
-# 1) Backup current repository files
-cp -f "${SCRIPT_DIR}/config.jsonc" "${BACKUP_DIR}/config.jsonc" 2>/dev/null || true
-cp -f "${SCRIPT_DIR}/style.css" "${BACKUP_DIR}/style.css" 2>/dev/null || true
-cp -f "${SCRIPT_DIR}/README.md" "${BACKUP_DIR}/README.md" 2>/dev/null || true
-cp -f "${SCRIPT_DIR}/install.sh" "${BACKUP_DIR}/install.sh" 2>/dev/null || true
-cp -f "${SCRIPT_DIR}/scripts/"* "${BACKUP_DIR}/scripts/" 2>/dev/null || true
-cp -f "${SCRIPT_DIR}/ai-config/"* "${BACKUP_DIR}/ai-config/" 2>/dev/null || true
-
-# 2) Update repository from active ~/.config files
+# Update repository from active ~/.config files
 cp -f "${SRC_WAYBAR_DIR}/config.jsonc" "${SCRIPT_DIR}/config.jsonc"
 cp -f "${SRC_WAYBAR_DIR}/style.css" "${SCRIPT_DIR}/style.css"
 
@@ -89,7 +75,6 @@ fi
 
 cat <<EOF
 Done.
-- Backup created: ${BACKUP_DIR}
 - Repo updated from: ${SRC_WAYBAR_DIR}
 - AI source: ${SRC_AI_DIR}
 EOF

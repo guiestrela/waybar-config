@@ -1,29 +1,18 @@
 #!/bin/bash
-# VPN Status Script for Waybar
-# Returns JSON with VPN connection status
 
-# Option 1: WireGuard
-# wg=$(wg show 2>/dev/null)
-# if [ -n "$wg" ]; then
-#     echo "{\"text\": \"🔒 WG\", \"tooltip\": \"WireGuard: Connected\"}"
-# else
-#     echo "{\"text\": \"\", \"tooltip\": \"VPN: Disconnected\"}"
-# fi
+# VPN Icon Configuration
+VPN_ICON="󰌾"  # Network secure icon (Nerd Font)
+VPN_ICON_COLOR="#000000"
 
-# Option 2: OpenVPN
-# if pgrep -x "openvpn" > /dev/null; then
-#     echo "{\"text\": \"🔒 VPN\", \"tooltip\": \"OpenVPN: Connected\"}"
-# else
-#     echo "{\"text\": \"\", \"tooltip\": \"VPN: Disconnected\"}"
-# fi
+# Check NordVPN status
+status=$(/usr/bin/nordvpn status 2>/dev/null)
 
-# Option 3: nmcli (NetworkManager)
-# vpn=$(nmcli -t -f NAME,TYPE con show --active | grep vpn | cut -d: -f1)
-# if [ -n "$vpn" ]; then
-#     echo "{\"text\": \"🔒 VPN\", \"tooltip\": \"VPN: $vpn\"}"
-# else
-#     echo "{\"text\": \"\", \"tooltip\": \"VPN: Disconnected\"}"
-# fi
-
-# Default: No VPN configured
-echo "{\"text\": \"\", \"tooltip\": \"VPN: Not configured\"}"
+if echo "$status" | grep -q "Connected"; then
+    # Connected to NordVPN - show shield icon with tooltip
+    server=$(echo "$status" | grep "Server:" | awk '{print $2, $3}')
+    country=$(echo "$status" | grep "Country:" | awk '{print $2}')
+    echo "{\"text\": \"$VPN_ICON\", \"class\": \"vpn-connected\", \"tooltip\": \"NordVPN Connected\n$server\n$country\"}"
+else
+    # Not connected
+    echo '{"text": "", "class": "vpn-disconnected", "tooltip": "VPN Disconnected"}'
+fi

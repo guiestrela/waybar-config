@@ -1,21 +1,34 @@
-#!/bin/bash
-# Memory Info Script for Waybar
-# Returns JSON with memory usage
+#!/usr/bin/env bash
 
-mem=$(free -m | grep Mem)
-total=$(echo $mem | awk '{print $2}')
-used=$(echo $mem | awk '{print $3}')
-percent=$((used * 100 / total))
+# Extrai dados do /proc/meminfo (em KB)
+MEM_TOTAL=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+MEM_AVAIL=$(grep MemAvailable /proc/meminfo | awk '{print $2}')
+MEM_USED=$((MEM_TOTAL - MEM_AVAIL))
 
-# Format output
-if [ $used -gt 1024 ]; then
-    used_gb=$(echo "scale=1; $used/1024" | bc)
-    total_gb=$(echo "scale=1; $total/1024" | bc)
-    text="${used_gb}G"
-    tooltip="Memory: ${used_gb}G / ${total_gb}G"
-else
-    text="${used}M"
-    tooltip="Memory: ${used}M / ${total}M"
+# Cálculo de porcentagem
+PERCENTAGE=$(( 100 * MEM_USED / MEM_TOTAL ))
+
+# Conversão para GB (Shell faz apenas inteiros, então usamos awk para decimais no tooltip)
+USED_GB=$(awk "BEGIN {printf \"%.1f\", $MEM_USED / 1024 / 1024}")
+TOTAL_GB=$(awk "BEGIN {printf \"%.1f\", $MEM_TOTAL / 1024 / 1024}")
+AVAIL_GB=$(awk "BEGIN {printf \"%.1f\", $MEM_AVAIL / 1024 / 1024}")
+
+# Swap (Opcional, mas útil no tooltip)
+SWAP_TOTAL=$(grep SwapTotal /proc/meminfo | awk '{print $2}')
+SWAP_FREE=$(grep SwapFree /proc/meminfo | awk '{print $2}')
+SWAP_USED=$((SWAP_TOTAL - SWAP_FREE))
+SWAP_GB=$(awk "BEGIN {printf \"%.1f\", $SWAP_USED / 1024 / 1024}")
+
+# Classes de status
+CLASS="normal"
+if [ "$PERCENTAGE" -gt 90 ]; then
+    CLASS="critical"
+elif [ "$PERCENTAGE" -gt 70 ]; then
+    CLASS="warning"
 fi
 
-echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\"}"
+# Ícone e Saída JSON
+ICON=""
+TOOLTIP="RAM Usage\\nUsed: ${USED_GB} GB\\nTotal: ${TOTAL_GB} GB\\nAvailable: ${AVAIL_GB} GB\\nUsage: ${PERCENTAGE}%\\n\\nSwap Used: ${SWAP_GB} GB"
+ICON=""
+echo "{\"text\": \"$ICON $PERCENTAGE%\", \"tooltip\": \"$TOOLTIP\", \"class\": \"$CLASS\", \"percentage\": $PERCENTAGE}"
