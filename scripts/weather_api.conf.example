@@ -1,0 +1,5 @@
+# OpenWeatherMap API key
+# Copy this file to weather_api.conf and paste your key below.
+# Alternative: export OPENWEATHER_API_KEY in your environment.
+
+YOUR_API_KEY_HERE

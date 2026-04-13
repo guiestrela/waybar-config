@@ -6,27 +6,25 @@ SRC_WAYBAR_DIR="${HOME}/.config/waybar"
 SRC_SCRIPTS_DIR="${SRC_WAYBAR_DIR}/scripts"
 SRC_AI_DIR="${HOME}/.config/waybar-ai-usage"
 
-INCLUDE_SECRETS=0
-
 print_help() {
   cat <<'EOF'
 Usage: ./backup-and-update-repo.sh [options]
 
 Options:
-  --include-secrets  Also copy copilot.conf and codex.conf (careful with git)
   -h, --help         Show this help
 EOF
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --include-secrets)
-      INCLUDE_SECRETS=1
-      shift
-      ;;
     -h|--help)
       print_help
       exit 0
+      ;;
+    --include-secrets)
+      echo "Option not supported anymore: --include-secrets" >&2
+      echo "Use only *.example files to avoid leaking secrets to git." >&2
+      exit 1
       ;;
     *)
       echo "Unknown option: $1" >&2
@@ -50,6 +48,7 @@ cp -f "${SRC_WAYBAR_DIR}/style.css" "${SCRIPT_DIR}/style.css"
 mkdir -p "${SCRIPT_DIR}/scripts" "${SCRIPT_DIR}/ai-config"
 cp -f "${SRC_SCRIPTS_DIR}/"*.sh "${SCRIPT_DIR}/scripts/" 2>/dev/null || true
 cp -f "${SRC_SCRIPTS_DIR}/"*.py "${SCRIPT_DIR}/scripts/" 2>/dev/null || true
+cp -f "${SRC_SCRIPTS_DIR}/"*.example "${SCRIPT_DIR}/scripts/" 2>/dev/null || true
 
 if [[ -f "${SRC_AI_DIR}/copilot.conf.example" ]]; then
   cp -f "${SRC_AI_DIR}/copilot.conf.example" "${SCRIPT_DIR}/ai-config/copilot.conf.example"
@@ -57,11 +56,6 @@ fi
 
 if [[ -f "${SRC_AI_DIR}/codex.conf.example" ]]; then
   cp -f "${SRC_AI_DIR}/codex.conf.example" "${SCRIPT_DIR}/ai-config/codex.conf.example"
-fi
-
-if [[ "${INCLUDE_SECRETS}" -eq 1 ]]; then
-  [[ -f "${SRC_AI_DIR}/copilot.conf" ]] && cp -f "${SRC_AI_DIR}/copilot.conf" "${SCRIPT_DIR}/ai-config/copilot.conf"
-  [[ -f "${SRC_AI_DIR}/codex.conf" ]] && cp -f "${SRC_AI_DIR}/codex.conf" "${SCRIPT_DIR}/ai-config/codex.conf"
 fi
 
 chmod +x "${SCRIPT_DIR}/install.sh" "${SCRIPT_DIR}/backup-and-update-repo.sh"

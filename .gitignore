@@ -1,0 +1,4 @@
+ai-config/*.conf
+scripts/weather_api.conf
+.env
+.env.*

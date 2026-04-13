@@ -48,11 +48,7 @@ This syncs by replacing existing files and adding missing ones:
 - `~/.config/waybar/scripts/*` -> `./scripts/`
 - `~/.config/waybar-ai-usage/*.example` -> `./ai-config/`
 
-Optional (copies real tokens too):
-
-```bash
-./backup-and-update-repo.sh --include-secrets
-```
+For safety, only `*.example` files are synced for AI config (no real tokens).
 
 ### 1. Backup existing config
 
@@ -114,12 +110,14 @@ waybar &
 
 ## Configuration
 
-Replace placeholders in your scripts:
+Configure weather API:
 
 ```bash
-# Example in weather.sh
-API_KEY="YOUR_OPENWEATHERMAP_API_KEY"
+cp scripts/weather_api.conf.example ~/.config/waybar/scripts/weather_api.conf
+# Then edit ~/.config/waybar/scripts/weather_api.conf with your OpenWeather API key
 ```
+
+Alternative: export `OPENWEATHER_API_KEY` in your shell/session.
 
 ### AI Config
 
